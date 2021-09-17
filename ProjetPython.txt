@@ -1,0 +1,64 @@
+Idées projet python:
+
+Une application en mode texte sans interface graphique qui gère les utilisateurs d'une boite
+
+si possible en version base de données type Postgresql ou Mysql, serait mieux, mais a voir si c'est autorisé!
+car sinon l'application sera réinitialisée a chaque fin d'execution(c'est un script pas un outil de stockage)
+
+Une boite ou entreprise est une classe, pouvant etre créé par un administrateur de l'application
+
+la classe Entreprise:
+-id
+-Nom
+-logo(lien optionnel)
+-Directeur de la boite
+-Date de création
+-Effectif(valeur mise a jour a chaque ajout d'employé)
+
+ainsi que les fonctions qui vont avec bien sur
+
+
+une entité de la boite est un objet, dérivé sur plusieurs catégories de salariés
+
+Un salarié lambda possède:
+-id
+-un nom
+-un prénom
+-age
+-une adresse mail
+-poste occupé
+-groupe de travail
+-login
+-mdp
+-id de l'entreprise
+-administrateur de l'application?
+-date de création
+-date de dernière modification
+
+
+ainsi que les fonctions qui vont avec bien sur
+
+
+Un salarié peut se connecter a l'application en utilisant ses identifiants pour éventuellement effectuer une mise a jour de son profil,
+s'il y'a accès. Il peut, dans tous les cas, se connecter pour vérifier ses infos.
+
+
+Les personne habilitées peuvent avoir accès a la liste des salariés triés en fonction de leur poste/groupe de travail, stocké dans un dictionnaire
+
+l'administrateur peut se connecter, avoir accès a toutes les informations, consulter les listes, Créer un utilisateur/une boite, supprimer un utilisateur/une boite
+
+
+fonctionnement de l'application:
+
+boucle while, tant que la personne authentifiée n'a pas choisi de quitter l'exécution.
+
+Au début de l'execution, une authentification est requise sur l'admninistrateur principal de l'application (["root" ->azerty],simple, temporaire)
+qui renvoie sur le menu principal->
+-consulter entreprises->management entreprise/consulter salariés d'entreprises-> management salariés d'une entreprise choisie
+
+? idées?
+a voir pour le reste, comme j'ai spécifié plus haut, en fonction du poste du salarié il peut avoir accès ou non a la modif de ses données personnelles
+
+
+
+-
