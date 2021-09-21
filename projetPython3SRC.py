@@ -7,6 +7,7 @@
 ######################
 import os;
 import psycopg2;
+import hashMdp;
 
 ##Replace login and Password with current superadmin posgresql user
 def postgresInit():
