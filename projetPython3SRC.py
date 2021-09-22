@@ -5,9 +5,9 @@
 # coding: utf-8
 
 ######################
-import os;
-import psycopg2;
-import hashMdp;
+import os
+import psycopg2
+from hashMdp import *
 
 ##Replace login and Password with current superadmin posgresql user
 def postgresInit():
@@ -26,7 +26,7 @@ def postgresInit():
         postgresInit()
 
 class Salarie:
-    def __init__(self, id,name,firstName,age,mail,function,workgroup,login,passwd,appAdmin,dateCreation,dateLastModif,id_entreprise):
+    def __init__(self, id,name,firstName,age,mail,function,workgroup,login,passwd,appAdmin):
         self.id = id
         self.name = name
         self.firstName = firstName
@@ -35,30 +35,34 @@ class Salarie:
         self.function = function
         self.workgroup = workgroup
         self.login = login
-        self.passwd = passwd
+        self.passwd = hashMdp(passwd)
         self.appAdmin = appAdmin
 
     def getId(self):
         return self.id
 
-
+    def getPasswd(self):
+        return self.passwd
 
 
 
 
 if __name__ == "__main__":
 
-    print("Veuillez vous connecter")
-    login = input("login :")
-    pwd = input("mot de passe :")
-    
 
+    salarieTest = Salarie(1,"Christophe","Bouton",20,"cgpsp6@gmail.com","Débile",12,"cguzik","azerty",True)
+    print(salarieTest.getPasswd())
     
-    while choix != 0 :
-        choix = input("Entrez le numéro du choix: ")
-        if choix.isdigit() == True:
-            choix = int(choix)
-        else:
-            choix = 0
-        if choix == "":
-            choix = 0
+##    print("Veuillez vous connecter")
+##    login = input("login :")
+##    pwd = input("mot de passe :")
+##    sortir = False
+##    
+##    while sortir == False :
+##        choix = input("Entrez le numéro du choix: ")
+##        if choix.isdigit() == True:
+##            choix = int(choix)
+##        else:
+##            choix = 0
+##        if choix == "" or choix == 0:
+##            sortir = True
