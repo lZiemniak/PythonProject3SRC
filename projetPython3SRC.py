@@ -44,7 +44,14 @@ class Salarie:
     def getPasswd(self):
         return self.passwd
 
-
+class Entreprise:
+    def __init__(self,companyID,companyName,companyLogo,companyDirector,companyCreationDate,companyEmployeesNum):
+        self.companyID = companyID
+        self.companyName = companyName
+        self.companyLogo = companyLogo
+        self.companyDirector = companyDirector
+        self.companyCreationDate = companyCreationDate
+        self.companyEmployeesNum = companyEmployeesNum
 
 
 if __name__ == "__main__":
