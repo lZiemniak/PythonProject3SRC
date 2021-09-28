@@ -8,6 +8,7 @@
 import os
 import psycopg2
 from hashMdp import *
+from datetime import datetime
 
 ##Replace login and Password with current superadmin posgresql user
 def postgresInit():
@@ -45,13 +46,15 @@ class Salarie:
         return self.passwd
 
 class Entreprise:
-    def __init__(self,companyID,companyName,companyLogo,companyDirector,companyCreationDate,companyEmployeesNum):
+    def __init__(self,companyID,companyName,companyLogo,companyDirector):
         self.companyID = companyID
         self.companyName = companyName
         self.companyLogo = companyLogo
         self.companyDirector = companyDirector
-        self.companyCreationDate = companyCreationDate
-        self.companyEmployeesNum = companyEmployeesNum
+        self.companyCreationDate = datetime.today().strftime('%Y-%m-%d')
+        self.companyEmployeesNum = 0
+
+    
 
 
 if __name__ == "__main__":
