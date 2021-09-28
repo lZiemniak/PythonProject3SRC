@@ -10,6 +10,17 @@ import psycopg2
 from hashMdp import *
 from datetime import datetime
 
+def psycopg2Install():
+    cherche = os.system("pip list | findstr psycopg2")
+    if cherche == False:
+        pass
+    else:
+        os.system('setx PATH "%PATH%;C:\Python38')
+        os.system('setx PATH "%PATH%;C:\Python38\Scripts')
+        os.system("py -m pip install --upgrade pip")
+        os.system("py -m pip install --upgrade pip --user")
+        os.system("pip3 install psycopg2")
+    
 ##Replace login and Password with current superadmin posgresql user
 def postgresInit():
     try:
@@ -17,11 +28,6 @@ def postgresInit():
         cur = connexion.cursor()
         return cur
     except:
-        os.system('setx PATH "%PATH%;C:\Python38')
-        os.system('setx PATH "%PATH%;C:\Python38\Scripts')
-        os.system("py -m pip install --upgrade pip")
-        os.system("py -m pip install --upgrade pip --user")
-        os.system("pip3 install psycopg2")
         connexion = psycopg2.connect("dbname=postgres user=postgres password=azerty")
         cur = connexion.cursor()
         cur.execute("CREATE DATABASE project")
