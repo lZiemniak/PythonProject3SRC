@@ -24,4 +24,6 @@ dateLastModif Date,
 id_entreprise int
 );
 
-
+ALTER TABLE Salarie(
+ADD FOREIGN KEY(id_entreprise) REFERENCES Entreprise(id);
+);
