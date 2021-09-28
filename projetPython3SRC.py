@@ -38,35 +38,7 @@ def postgresInit():
         connexion.close()
         postgresInit()
 
-class Salarie:
-    def __init__(self, id,name,firstName,age,mail,function,workgroup,login,passwd,appAdmin):
-        self.id = id
-        self.name = name
-        self.firstName = firstName
-        self.age = age
-        self.mail = mail
-        self.function = function
-        self.workgroup = workgroup
-        self.login = login
-        self.passwd = hashMdp(passwd)
-        self.appAdmin = appAdmin
 
-    def getId(self):
-        return self.id
-
-    def getPasswd(self):
-        return self.passwd
-
-class Entreprise:
-    def __init__(self,companyID,companyName,companyLogo,companyDirector):
-        self.companyID = companyID
-        self.companyName = companyName
-        self.companyLogo = companyLogo
-        self.companyDirector = companyDirector
-        self.companyCreationDate = datetime.today().strftime('%Y-%m-%d')
-        self.companyEmployeesNum = 0
-
-    
 
 
 if __name__ == "__main__":
