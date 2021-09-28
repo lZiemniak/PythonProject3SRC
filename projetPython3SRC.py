@@ -8,6 +8,7 @@
 import os
 import psycopg2
 from hashMdp import *
+from ClassFile import *
 from datetime import datetime
 
 ##Check si psycop2 est installé ou non
@@ -47,7 +48,7 @@ if __name__ == "__main__":
     salarieTest = Salarie(1,"Christophe","Bouton",20,"cgpsp6@gmail.com","Débile",12,"cguzik","azerty",True)
     print(salarieTest.getPasswd())
     
-print("Bienvenue dans l'Active Directory du groupe 12 !")
-print("Veuillez insérer votre identifiant et votre mot de passe pour vous connecter")
-login = input("Indentifiant : ")
-passwd = input("Mot de passe : ")
+    print("Bienvenue dans l'Active Directory du groupe 12 !")
+    print("Veuillez insérer votre identifiant et votre mot de passe pour vous connecter")
+    login = input("Indentifiant : ")
+    passwd = input("Mot de passe : ")
