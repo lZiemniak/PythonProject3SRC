@@ -10,6 +10,7 @@ import psycopg2
 from hashMdp import *
 from datetime import datetime
 
+##Check si psycop2 est installé ou non
 def psycopg2Install():
     cherche = os.system("pip list | findstr psycopg2")
     if cherche == False:
