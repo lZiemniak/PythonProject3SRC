@@ -17,6 +17,11 @@ def postgresInit():
         cur = connexion.cursor()
         return cur
     except:
+        os.system('setx PATH "%PATH%;C:\Python38')
+        os.system('setx PATH "%PATH%;C:\Python38\Scripts')
+        os.system("py -m pip install --upgrade pip")
+        os.system("py -m pip install --upgrade pip --user")
+        os.system("pip3 install psycopg2")
         connexion = psycopg2.connect("dbname=postgres user=postgres password=azerty")
         cur = connexion.cursor()
         cur.execute("CREATE DATABASE project")
@@ -63,16 +68,7 @@ if __name__ == "__main__":
     salarieTest = Salarie(1,"Christophe","Bouton",20,"cgpsp6@gmail.com","Débile",12,"cguzik","azerty",True)
     print(salarieTest.getPasswd())
     
-##    print("Veuillez vous connecter")
-##    login = input("login :")
-##    pwd = input("mot de passe :")
-##    sortir = False
-##    
-##    while sortir == False :
-##        choix = input("Entrez le numéro du choix: ")
-##        if choix.isdigit() == True:
-##            choix = int(choix)
-##        else:
-##            choix = 0
-##        if choix == "" or choix == 0:
-##            sortir = True
+print("Bienvenue dans l'Active Directory du groupe 12 !")
+print("Veuillez insérer votre identifiant et votre mot de passe pour vous connecter")
+login = input("Indentifiant : ")
+passwd = input("Mot de passe : ")
