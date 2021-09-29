@@ -6,7 +6,6 @@
 
 ######################
 import os
-import psycopg2
 from hashMdp import *
 from ClassFile import *
 from datetime import datetime
@@ -15,14 +14,18 @@ from datetime import datetime
 def psycopg2Install():
     cherche = os.system("pip list | findstr psycopg2")
     if cherche == False:
+        os.system("cls")
         pass
     else:
-        os.system('setx PATH "%PATH%;C:\Python38')
-        os.system('setx PATH "%PATH%;C:\Python38\Scripts')
-        os.system("py -m pip install --upgrade pip")
-        os.system("py -m pip install --upgrade pip --user")
-        os.system("pip3 install psycopg2")
-    
+        os.system('setx PATH "%PATH%;C:\Python38 | cls')
+        os.system('setx PATH "%PATH%;C:\Python38\Scripts  | cls')
+        os.system("py -m pip install --upgrade pip | cls")
+        os.system("py -m pip install --upgrade pip --user | cls")
+        os.system("pip3 install psycopg2 | cls")
+
+psycopg2Install()
+import psycopg2
+
 ##Replace login and Password with current superadmin posgresql user
 def postgresInit():
     try:
