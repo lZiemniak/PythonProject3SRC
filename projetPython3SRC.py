@@ -10,48 +10,71 @@ from hashMdp import *
 from ClassFile import *
 from datetime import datetime
 
-##Check si psycop2 est installé ou non
-def psycopg2Install():
-    cherche = os.system("pip list | findstr psycopg2")
-    if cherche == False:
-        os.system("cls")
-        pass
-    else:
-        os.system('setx PATH "%PATH%;C:\Python38 | cls')
-        os.system('setx PATH "%PATH%;C:\Python38\Scripts  | cls')
-        os.system("py -m pip install --upgrade pip | cls")
-        os.system("py -m pip install --upgrade pip --user | cls")
-        os.system("pip3 install psycopg2 | cls")
+def getSalarieList():
+    f = open("salarie.csv","r")
+    listeDeSalaries = []
+    for ligne in f:
+        splittedLigne = ligne.split(",")
+        listeDeSalaries.append(Salarie(splittedLigne[0],
+                               splittedLigne[1],
+                               splittedLigne[2],
+                               splittedLigne[3],
+                               splittedLigne[4],
+                               splittedLigne[5],
+                               splittedLigne[6],
+                               splittedLigne[7],
+                               splittedLigne[8],
+                               splittedLigne[9] ) )
+    return listeDeSalaries
 
-psycopg2Install()
-import psycopg2
-
-##Replace login and Password with current superadmin posgresql user
-def postgresInit():
-    try:
-        connexion = psycopg2.connect("dbname=project user=userProject password=azerty")
-        cur = connexion.cursor()
-        return cur
-    except:
-        connexion = psycopg2.connect("dbname=postgres user=postgres password=azerty")
-        cur = connexion.cursor()
-        cur.execute("CREATE DATABASE project")
-        cur.execute("CREATE ROLE userProject WITH PASSWORD 'azerty' CREATEDB CREATEROLE LOGIN")
-        cur.execute("ALTER DATABASE project OWNER TO project")
-        cur.execute("\i initBdd.sql")
-        connexion.close()
-        postgresInit()
+def getEntrepriseList():
+    f = open("entreprises.csv","r")
+    listeDEntreprises = []
+    for ligne in f:
+        splittedLigne = ligne.split(",")
+        listeDEntreprises.append(Entreprise(splittedLigne[0],
+                               splittedLigne[1],
+                               splittedLigne[2],
+                               splittedLigne[3],
+                               splittedLigne[4],
+                               splittedLigne[5] ) )
+    return listeDEntreprise
 
 
 
+def connexion(listeDeSalaries):
+    connexionOk = False
+    salarieReturn = None
+    while(connexionOk == False):
+        print("Veuillez insérer vos identifiants pour vous connecter: ")
+        login = input("Veuillez entrer le login: ")
+        mdp = input("Entrez votre mot de passe: ")
+        mdp = hashMdp(mdp)
+        for unElem in ListeDeSalaries:
+            if unElem.getLogin() == login:
+                result = checkMdp(mdp, unElem.getPasswd())
+                if result == True:
+                    salarieReturn = unElem
+                    print(salarieReturn)
+                    connexionOk = True
+                    break
+                else:
+                    print("Le mot de passe n'est pas Correct")
+                    break
+        print("Le compte n'a pas été trouvé. Veuillez tenter de se connecter a nouveau.")
+    return salarieReturn
+        
 
 if __name__ == "__main__":
+    listeDeSalaries = getSalarieList()
+    listeDEntreprises = getEntrepriseList()
 
-
-    salarieTest = Salarie(1,"Christophe","Bouton",20,"cgpsp6@gmail.com","Débile",12,"cguzik","azerty",True)
-    print(salarieTest.getPasswd())
-    
     print("Bienvenue dans l'Active Directory du groupe 12 !")
-    print("Veuillez insérer votre identifiant et votre mot de passe pour vous connecter")
-    login = input("Indentifiant : ")
-    passwd = input("Mot de passe : ")
+    
+    connexion(listeDeSalaries)
+    
+    
+
+##    salarieTest = Salarie(1,"Christophe","Bouton",20,"cgpsp6@gmail.com","Débile",12,"cguzik","azerty",True)
+##    print(salarieTest.getPasswd())
+
