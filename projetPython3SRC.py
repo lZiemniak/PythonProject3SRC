@@ -8,23 +8,28 @@
 import os
 from hashMdp import *
 from ClassFile import *
-from datetime import datetime
+from datetime import *
+from getpass import getpass
 
 def getSalarieList():
-    f = open("salarie.csv","r")
+    f = open("salaries.csv","r")
     listeDeSalaries = []
     for ligne in f:
         splittedLigne = ligne.split(",")
-        listeDeSalaries.append(Salarie(splittedLigne[0],
+        password =bytes(splittedLigne[8], encoding="raw_unicode_escape")
+        print(password)
+        listeDeSalaries.append(Salarie(int(splittedLigne[0]),
                                splittedLigne[1],
                                splittedLigne[2],
-                               splittedLigne[3],
+                               int(splittedLigne[3]),
                                splittedLigne[4],
                                splittedLigne[5],
                                splittedLigne[6],
                                splittedLigne[7],
-                               splittedLigne[8],
-                               splittedLigne[9] ) )
+                               password,
+                               bool(splittedLigne[9]),
+                               splittedLigne[10] ) )
+        
     return listeDeSalaries
 
 def getEntrepriseList():
@@ -32,13 +37,12 @@ def getEntrepriseList():
     listeDEntreprises = []
     for ligne in f:
         splittedLigne = ligne.split(",")
-        listeDEntreprises.append(Entreprise(splittedLigne[0],
+        listeDEntreprises.append(Entreprise(int(splittedLigne[0]),
                                splittedLigne[1],
                                splittedLigne[2],
-                               splittedLigne[3],
-                               splittedLigne[4],
-                               splittedLigne[5] ) )
-    return listeDEntreprise
+                               int(splittedLigne[3]),
+                               splittedLigne[4] ) )
+    return listeDEntreprises
 
 
 
@@ -48,20 +52,24 @@ def connexion(listeDeSalaries):
     while(connexionOk == False):
         print("Veuillez insérer vos identifiants pour vous connecter: ")
         login = input("Veuillez entrer le login: ")
+        
         mdp = input("Entrez votre mot de passe: ")
-        mdp = hashMdp(mdp)
-        for unElem in ListeDeSalaries:
+        found = False
+        for unElem in listeDeSalaries:
             if unElem.getLogin() == login:
-                result = checkMdp(mdp, unElem.getPasswd())
+                found = True
+                print(unElem)
+                result = checkMdp(unElem.getPasswd(), mdp )
                 if result == True:
                     salarieReturn = unElem
                     print(salarieReturn)
                     connexionOk = True
                     break
                 else:
-                    print("Le mot de passe n'est pas Correct")
+                    print("Le mot de passe n'est pas correct")
                     break
-        print("Le compte n'a pas été trouvé. Veuillez tenter de se connecter a nouveau.")
+        if found == False:
+            print("Le compte n'a pas été trouvé. Veuillez tenter de se connecter a nouveau.")
     return salarieReturn
         
 
@@ -69,9 +77,16 @@ if __name__ == "__main__":
     listeDeSalaries = getSalarieList()
     listeDEntreprises = getEntrepriseList()
 
+    print(listeDeSalaries)
+    print(listeDEntreprises)
+    
     print("Bienvenue dans l'Active Directory du groupe 12 !")
     
     connexion(listeDeSalaries)
+
+    print("Vous vous etes Connectés! GG")
+
+    
     
     
 

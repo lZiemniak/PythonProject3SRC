@@ -1,4 +1,7 @@
-import datetime
+from datetime import *
+from hashMdp import *
+import os
+
 
 class Salarie:
     def __init__(self, id,name,firstName,age,mail,function,workgroup,login,passwd,appAdmin,dateCreation):
@@ -10,7 +13,7 @@ class Salarie:
         self.function = function
         self.workgroup = workgroup
         self.login = login
-        self.passwd = hashMdp(passwd)
+        self.passwd = passwd
         self.appAdmin = appAdmin
         self.dateCreation = dateCreation
         self.dateLastModif = date.today().strftime("%d/%m/%Y")
@@ -87,13 +90,14 @@ class Salarie:
     
 
 class Entreprise:
-    def __init__(self,companyID,companyName,companyLogo,companyDirector):
+    def __init__(self,companyID,companyName,companyLogo,companyDirector,companyCreationDate):
         self.companyID = companyID
         self.companyName = companyName
         self.companyLogo = companyLogo
         self.companyDirector = companyDirector
-        self.companyCreationDate = datetime.today().strftime('%Y-%m-%d')
+        self.companyCreationDate = companyCreationDate
         self.companyEmployeesNum = 0
+        self.companyLastModificationDate = date.today().strftime("%d/%m/%Y")
 
     def getCompanyID(self):
         return self.companyID
@@ -127,7 +131,6 @@ class Entreprise:
 
     def setCompanyEmployeesNum(self,companyEmployeesNum):
         self.companyEmployeesNum = companyEmployeesNum
-
 
     def addEmployeeToCompany(self):
         self.companyEmployeesNum = self.companyEmployeesNum +1
