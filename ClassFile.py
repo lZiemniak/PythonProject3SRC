@@ -4,7 +4,7 @@ import os
 
 
 class Salarie:
-    def __init__(self, id,name,firstName,age,mail,function,workgroup,login,passwd,appAdmin,dateCreation):
+    def __init__(self, id,name,firstName,age,mail,function,workgroup,login,passwd,appAdmin,dateCreation,idEntreprise):
         self.id = id
         self.name = name
         self.firstName = firstName
@@ -17,6 +17,7 @@ class Salarie:
         self.appAdmin = appAdmin
         self.dateCreation = dateCreation
         self.dateLastModif = date.today().strftime("%d/%m/%Y")
+	self.idEntreprise = idEntreprise
 
     def getId(self):
         return self.id
@@ -86,7 +87,11 @@ class Salarie:
         today = today.strftime("%d/%m/%Y")
         self.dateLastModif = today
     
-    
+    def getIdEntreprise(self):
+        return self.idEntreprise
+
+    def setIdEntreprise(self,idEntreprise):
+        self.idEntreprise = idEntreprise
     
 
 class Entreprise:

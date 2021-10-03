@@ -10,12 +10,14 @@ from hashMdp import *
 from ClassFile import *
 from datetime import *
 from getpass import getpass
+import hashlib
 
 def getSalarieList():
     f = open("salaries.csv","r")
     listeDeSalaries = []
     for ligne in f:
         splittedLigne = ligne.split(",")
+        print(splittedLigne[8])
         password =bytes(splittedLigne[8], encoding="raw_unicode_escape")
         print(password)
         listeDeSalaries.append(Salarie(int(splittedLigne[0]),
@@ -71,7 +73,7 @@ def connexion(listeDeSalaries):
         if found == False:
             print("Le compte n'a pas été trouvé. Veuillez tenter de se connecter a nouveau.")
     return salarieReturn
-        
+
 
 if __name__ == "__main__":
     listeDeSalaries = getSalarieList()
