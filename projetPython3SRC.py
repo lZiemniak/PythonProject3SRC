@@ -70,6 +70,29 @@ def connexion(listeDeSalaries):
             print("Le compte n'a pas été trouvé. Veuillez tenter de se connecter a nouveau.")
     return salarieReturn
 
+def menuAdmin():
+    f1 = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\salaries.csv","r")
+    with open('C:\\Users\\Ekzzin\\Desktop\\pythonProject\\entreprises.csv') as f2:
+    #f2 = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\entreprises.csv","r")
+        f2list = f2.readlines()
+        for ligne1 in f1:
+            splittedLigne1 = ligne1.split(",")
+            print("Bienvenue sur votre menu",splittedLigne1[1],"\n")
+            print("Voici la liste des entreprises :" "\n")
+            for ligne2 in f2list:
+                splittedLigne2 = ligne2.split(",")
+                print(splittedLigne2[0], splittedLigne2[1])
+            
+        entrepriseSelec = input("\n""Veuillez séléctionner l'identifiant de l'entreprise dont vous souhaitez accéder : ")
+
+        result="L'entreprise n'existe pas"
+
+        for ligne3 in f2list:
+            splittedLigne3 = ligne3.split(",")
+            if splittedLigne3[0] == entrepriseSelec:
+                os.system("cls")
+                result="\nBienvenue sur le menu de "+splittedLigne3[1]+"\n1 - Liste des salariés\n2 - Modifier les informations de l'entreprise\n3 - Supprimer l'entreprise (attention hein :))"
+        print(result)
 
 
 if __name__ == "__main__":
