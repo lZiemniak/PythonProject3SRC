@@ -10,6 +10,7 @@ def hashMdp(passwd):
 
 #check si mdp correct
 def checkMdp(storedPasswd, passwd):
+    
     storedSalt = storedPasswd[:32]
     storedKey = storedPasswd[32:]
     passwd = hashlib.pbkdf2_hmac("sha256",passwd.encode("utf-8"),storedSalt,100000)
@@ -17,5 +18,6 @@ def checkMdp(storedPasswd, passwd):
     if storedPasswd == passwd:
         return True
     else:
+        
         return False
 

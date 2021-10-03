@@ -1,7 +1,7 @@
 #Projet Python Groupe 12
 #Christophe Guzik et Léonard Ziemniak
 
-#! /usr/local/bin/python
+#!/usr/bin/env python3
 # coding: utf-8
 
 ######################
@@ -13,14 +13,13 @@ from getpass import getpass
 
 
 def getSalarieList():
-    f = open("salaries.csv","r")
+    f = open("salaries.csv","r", encoding="utf-8")
     listeDeSalaries = []
     for ligne in f:
         splittedLigne = ligne.split(",")
-        print(splittedLigne[8])
         passwdToFormat = splittedLigne[8]
-        password =bytes(passwdToFormat, encoding="raw_unicode_escape")
-        print(password)
+        password = passwdToFormat.encode("raw_unicode_escape")
+        password = password.decode("unicode_escape").encode("ISO-8859-1")        
         listeDeSalaries.append(Salarie(int(splittedLigne[0]),
                                splittedLigne[1],
                                splittedLigne[2],
@@ -33,7 +32,6 @@ def getSalarieList():
                                bool(splittedLigne[9]),
                                splittedLigne[10],
                                splittedLigne[11] ) )
-        
     return listeDeSalaries
 
 def getEntrepriseList():
@@ -49,24 +47,20 @@ def getEntrepriseList():
     return listeDEntreprises
 
 
-
 def connexion(listeDeSalaries):
     connexionOk = False
     salarieReturn = None
     while(connexionOk == False):
         print("Veuillez insérer vos identifiants pour vous connecter: ")
         login = input("Veuillez entrer le login: ")
-        
         mdp = input("Entrez votre mot de passe: ")
         found = False
         for unElem in listeDeSalaries:
             if unElem.getLogin() == login:
                 found = True
-                print(unElem.getPasswd())
                 result = checkMdp(unElem.getPasswd(), mdp )
                 if result == True:
                     salarieReturn = unElem
-                    print(salarieReturn)
                     connexionOk = True
                     break
                 else:
@@ -77,12 +71,11 @@ def connexion(listeDeSalaries):
     return salarieReturn
 
 
+
 if __name__ == "__main__":
     listeDeSalaries = getSalarieList()
     listeDEntreprises = getEntrepriseList()
 
-    print(listeDeSalaries)
-    print(listeDEntreprises)
     
     print("Bienvenue dans l'Active Directory du groupe 12 !")
     
