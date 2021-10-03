@@ -94,13 +94,39 @@ def menuAdmin(listeDeSalaries, listeDEntreprises, userConnecte):
     print("Voici la liste des entreprises :" "\n")
     for ligne1 in listeDEntreprises:
         print(str(ligne1.getCompanyID()) + " : " + ligne1.getCompanyName())
-    
+        
     print("\nM pour modifier l'utilisateur en cours")
     print("A pour afficher les informations de l'utilisateur connecté")
-    print("Tapez E pour quitter")
-    entrepriseSelec = input("\n""Veuillez séléctionner l'identifiant de l'entreprise dont vous souhaitez accéder : ")
+    print("Tapez Q pour quitter")
+    selection = input("\n""Veuillez séléctionner l'identifiant de l'entreprise dont vous souhaitez accéder : ")
+    if type(selection) == int:
+        entrepriseFound = trouverEntreprise(selection, listeDEntreprises)
+        if entrepriseFound != False:
+            print("Entreprise trouvée")
+            print(entrepriseFound.toString())
+        else:
+            print("Entreprise inconnue")
+    else:
+        if selection == 'A' or selection == 'a':
+            print(userConnecte.toString())
+        elif selection == 'M' or selection == 'm':
+            print(userConnecte.toString())
+            userConnecte = menuModifUser(userConnecte)
+        elif selection == 'Q' or selection == 'q':
+            return
+ 
+def menuEntreprise(entreprise):
+    
 
-    result="L'entreprise n'existe pas"
+def trouverEntreprise(entrepriseSelec, listeDEntreprises):
+    found = False   
+    for ligne in listeDEntreprises:
+        if int(entrepriseSelec) == ligne.getCompanyID():
+            found = True
+            return ligne
+    return found
+
+                    
 
 #    for ligne3 in f2:
 #        splittedLigne3 = ligne3.split(",")
