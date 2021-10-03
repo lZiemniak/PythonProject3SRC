@@ -85,8 +85,8 @@ def sauvegardeDonnéesFinDExecution(listSalaries,listEntreprises):
         f.write(uneLigne.toString())
     f.close()
     f = open("entreprises.csv","w")
-    for uneLigne in listEntreprises:
-        f.write(uneLigne)
+#    for uneLigne in listEntreprises:
+        #f.write(uneLigne)
     f.close()
 
 
