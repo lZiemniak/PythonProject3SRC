@@ -13,7 +13,7 @@ from getpass import getpass
 
 
 def getSalarieList():
-    f = open("salaries.csv","r", encoding="utf-8")
+    f = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\salaries.csv","r", encoding="utf-8")
     listeDeSalaries = []
     for ligne in f:
         splittedLigne = ligne.split(",")
@@ -35,7 +35,7 @@ def getSalarieList():
     return listeDeSalaries
 
 def getEntrepriseList():
-    f = open("entreprises.csv","r")
+    f = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\entreprises.csv","r")
     listeDEntreprises = []
     for ligne in f:
         splittedLigne = ligne.split(",")
@@ -89,22 +89,39 @@ def sauvegardeDonnéesFinDExecution(listSalaries,listEntreprises):
         f.write(uneLigne.toString())
     f.close()
 
+def menuAdmin(listeDeSalaries, listeDEntreprises, userConnecte):
+    print("Bienvenue sur votre menu "+userConnecte.getFirstName() + " " + userConnecte.getName()+"\n")
+    print("Voici la liste des entreprises :" "\n")
+    for ligne1 in listeDEntreprises:
+        print(str(ligne1.getCompanyID()) + " : " + ligne1.getCompanyName())
+    
+    print("\nM pour modifier l'utilisateur en cours")
+    print("A pour afficher les informations de l'utilisateur connecté")
+    print("Tapez E pour quitter")
+    entrepriseSelec = input("\n""Veuillez séléctionner l'identifiant de l'entreprise dont vous souhaitez accéder : ")
 
+    result="L'entreprise n'existe pas"
+
+#    for ligne3 in f2:
+#        splittedLigne3 = ligne3.split(",")
+#        if splittedLigne3[0] == entrepriseSelec:
+#            os.system("cls")
+#            result="\nBienvenue sur le menu de "+splittedLigne3[1]+"\n1 - Liste des salariés\n2 - Modifier les informations de l'entreprise\n3 - Supprimer l'entreprise (attention hein :))"
+#            print(listeDeSalaries)
+#    print(result)
 
 if __name__ == "__main__":
     listeDeSalaries = getSalarieList()
     listeDEntreprises = getEntrepriseList()
-
     
-    print("Bienvenue dans l'Active Directory du groupe 12 !")
+    
+#    print("Bienvenue dans l'Active Directory du groupe 12 !")
     
     userConnecte = connexion(listeDeSalaries)
 
-    print("Vous vous etes Connectés! GG")
-    print("Bonjour, " + userConnecte.getFirstName() + " " + userConnecte.getName())
+#    print("Vous vous etes Connectés! GG")
+#    print("Bonjour, " + userConnecte.getFirstName() + " " + userConnecte.getName())
     
-    
+    menuAdmin(listeDeSalaries, listeDEntreprises, userConnecte)    
     
     sauvegardeDonnéesFinDExecution(listeDeSalaries, listeDEntreprises)
-
-
