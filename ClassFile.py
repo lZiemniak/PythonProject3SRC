@@ -16,8 +16,9 @@ class Salarie:
         self.passwd = passwd
         self.appAdmin = appAdmin
         self.dateCreation = dateCreation
+        self.idEntreprise = idEntreprise
         self.dateLastModif = date.today().strftime("%d/%m/%Y")
-	self.idEntreprise = idEntreprise
+	
 
     def getId(self):
         return self.id

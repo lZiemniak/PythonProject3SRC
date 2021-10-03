@@ -10,7 +10,7 @@ from hashMdp import *
 from ClassFile import *
 from datetime import *
 from getpass import getpass
-import hashlib
+
 
 def getSalarieList():
     f = open("salaries.csv","r")
@@ -18,7 +18,8 @@ def getSalarieList():
     for ligne in f:
         splittedLigne = ligne.split(",")
         print(splittedLigne[8])
-        password =bytes(splittedLigne[8], encoding="raw_unicode_escape")
+        passwdToFormat = splittedLigne[8]
+        password =bytes(passwdToFormat, encoding="raw_unicode_escape")
         print(password)
         listeDeSalaries.append(Salarie(int(splittedLigne[0]),
                                splittedLigne[1],
@@ -30,7 +31,8 @@ def getSalarieList():
                                splittedLigne[7],
                                password,
                                bool(splittedLigne[9]),
-                               splittedLigne[10] ) )
+                               splittedLigne[10],
+                               splittedLigne[11] ) )
         
     return listeDeSalaries
 
@@ -60,7 +62,7 @@ def connexion(listeDeSalaries):
         for unElem in listeDeSalaries:
             if unElem.getLogin() == login:
                 found = True
-                print(unElem)
+                print(unElem.getPasswd())
                 result = checkMdp(unElem.getPasswd(), mdp )
                 if result == True:
                     salarieReturn = unElem
