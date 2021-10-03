@@ -95,7 +95,7 @@ class Salarie:
         self.idEntreprise = idEntreprise
 
     def toString(self):
-        return str(self.id) + ","+self.name + "," + self.firstName + "," + str(self.age) + ","+self.mail+","+self.function+","+self.workgroup+","+self.login+","+self.passwd.decode("ISO-8859-1").encode("unicode_escape").decode("raw_unicode_escape")+","+str(self.appAdmin)+","+self.dateCreation+","+str(self.idEntreprise)
+        return str(self.id) + ","+self.name + "," +self.firstName + "," +str(self.age) + ","+self.mail+","+self.function+","+self.workgroup+","+self.login+","+self.passwd.decode("ISO-8859-1").encode("unicode_escape").decode("raw_unicode_escape")+","+str(self.appAdmin)+","+self.dateCreation+","+str(self.idEntreprise)
     
     
 
@@ -146,7 +146,7 @@ class Entreprise:
         self.companyEmployeesNum = self.companyEmployeesNum +1
 
     def toString(self):
-        return str(self.companyID) + ","+self.companyName + "," + self.companyLogo + "," + str(self.companyDirector)+","+str(self.companyEmployeesNum) +","+self.companyCreationDate
+        return str(self.companyID) + ","+self.companyName + "," + self.companyLogo + "," + str(self.companyDirector)+","+str(self.companyEmployeesNum) +","+self.companyCreationDate+"\n"
     
 
 
