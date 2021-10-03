@@ -145,5 +145,8 @@ class Entreprise:
     def addEmployeeToCompany(self):
         self.companyEmployeesNum = self.companyEmployeesNum +1
 
+    def toString(self):
+        return str(self.companyID) + ","+self.companyName + "," + self.companyLogo + "," + str(self.companyDirector)+","+str(self.companyEmployeesNum) +","+self.companyCreationDate
     
+
 
