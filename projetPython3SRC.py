@@ -47,10 +47,16 @@ def getEntrepriseList():
     return listeDEntreprises
 
 
+
+
 def connexion(listeDeSalaries):
     connexionOk = False
     salarieReturn = None
+    tentativesCo = 0
     while(connexionOk == False):
+        if tentativesCo ==3:
+            print("Trop de tentatives, arrêt du programme.")
+            quit()
         print("Veuillez insérer vos identifiants pour vous connecter: ")
         login = input("Veuillez entrer le login: ")
         mdp = input("Entrez votre mot de passe: ")
@@ -65,34 +71,24 @@ def connexion(listeDeSalaries):
                     break
                 else:
                     print("Le mot de passe n'est pas correct")
+                    tentativesCo = tentativesCo+1
                     break
         if found == False:
             print("Le compte n'a pas été trouvé. Veuillez tenter de se connecter a nouveau.")
     return salarieReturn
 
-def menuAdmin():
-    f1 = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\salaries.csv","r")
-    with open('C:\\Users\\Ekzzin\\Desktop\\pythonProject\\entreprises.csv') as f2:
-    #f2 = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\entreprises.csv","r")
-        f2list = f2.readlines()
-        for ligne1 in f1:
-            splittedLigne1 = ligne1.split(",")
-            print("Bienvenue sur votre menu",splittedLigne1[1],"\n")
-            print("Voici la liste des entreprises :" "\n")
-            for ligne2 in f2list:
-                splittedLigne2 = ligne2.split(",")
-                print(splittedLigne2[0], splittedLigne2[1])
-            
-        entrepriseSelec = input("\n""Veuillez séléctionner l'identifiant de l'entreprise dont vous souhaitez accéder : ")
 
-        result="L'entreprise n'existe pas"
 
-        for ligne3 in f2list:
-            splittedLigne3 = ligne3.split(",")
-            if splittedLigne3[0] == entrepriseSelec:
-                os.system("cls")
-                result="\nBienvenue sur le menu de "+splittedLigne3[1]+"\n1 - Liste des salariés\n2 - Modifier les informations de l'entreprise\n3 - Supprimer l'entreprise (attention hein :))"
-        print(result)
+def sauvegardeDonnéesFinDExecution(listSalaries,listEntreprises):
+    f = open("salaries.csv","w", encoding="utf-8")
+    for uneLigne in listSalaries:
+        f.write(uneLigne.toString())
+    f.close()
+    f = open("entreprises.csv","w")
+    for uneLigne in listEntreprises:
+        f.write(uneLigne)
+    f.close()
+
 
 
 if __name__ == "__main__":
@@ -102,14 +98,13 @@ if __name__ == "__main__":
     
     print("Bienvenue dans l'Active Directory du groupe 12 !")
     
-    connexion(listeDeSalaries)
+    userConnecte = connexion(listeDeSalaries)
 
     print("Vous vous etes Connectés! GG")
+    print("Bonjour, " + userConnecte.getFirstName() + " " + userConnecte.getName())
+    
+    
+    
+    sauvegardeDonnéesFinDExecution(listeDeSalaries, listeDEntreprises)
 
-    
-    
-    
-
-##    salarieTest = Salarie(1,"Christophe","Bouton",20,"cgpsp6@gmail.com","Débile",12,"cguzik","azerty",True)
-##    print(salarieTest.getPasswd())
 
