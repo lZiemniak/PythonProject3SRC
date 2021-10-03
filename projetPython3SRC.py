@@ -4,6 +4,11 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
+#####
+
+#Pb a résoudre: pb d'acces au menu entreprise
+#fonctionnalités a ajouter: corriger les dates de dernière modif, age en fonction de la date naissance
+
 ######################
 import os
 from hashMdp import *
@@ -13,7 +18,7 @@ from getpass import getpass
 
 
 def getSalarieList():
-    f = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\salaries.csv","r", encoding="utf-8")
+    f = open("salaries.csv","r", encoding="utf-8")
     listeDeSalaries = []
     for ligne in f:
         splittedLigne = ligne.split(",")
@@ -35,7 +40,7 @@ def getSalarieList():
     return listeDeSalaries
 
 def getEntrepriseList():
-    f = open("C:\\Users\\Ekzzin\\Desktop\\pythonProject\\entreprises.csv","r")
+    f = open("entreprises.csv","r")
     listeDEntreprises = []
     for ligne in f:
         splittedLigne = ligne.split(",")
@@ -94,29 +99,181 @@ def menuAdmin(listeDeSalaries, listeDEntreprises, userConnecte):
     print("Voici la liste des entreprises :" "\n")
     for ligne1 in listeDEntreprises:
         print(str(ligne1.getCompanyID()) + " : " + ligne1.getCompanyName())
+    ok = False
+    while ok == False :   
+        print("\nM pour modifier l'utilisateur en cours")
+        print("A pour afficher les informations de l'utilisateur connecté")
+        print("E pour ajouter une nouvelle entreprise")
+        print("S pour ajouter un nouveau salarié")
+        print("F pour afficher tous les salariés")
+        print("D pour supprimér un salarié")
+        print("Tapez Q pour quitter")
         
-    print("\nM pour modifier l'utilisateur en cours")
-    print("A pour afficher les informations de l'utilisateur connecté")
-    print("Tapez Q pour quitter")
-    selection = input("\n""Veuillez séléctionner l'identifiant de l'entreprise dont vous souhaitez accéder : ")
-    if type(selection) == int:
-        entrepriseFound = trouverEntreprise(selection, listeDEntreprises)
-        if entrepriseFound != False:
-            print("Entreprise trouvée")
-            print(entrepriseFound.toString())
-        else:
-            print("Entreprise inconnue")
+        selection = input("\n""Veuillez séléctionner l'identifiant de l'entreprise ou l'action souhaitée : ")
+        try:
+            selection = int(selection)
+            entrepriseFound = trouverEntreprise(selection, listeDEntreprises)
+            if entrepriseFound != False:
+                print("Entreprise trouvée")
+                menuEntreprise(entreprise,listeDEntreprises)
+            else:
+                print("Entreprise inconnue")
+        except:
+            if selection == 'A' or selection == 'a':
+                print(userConnecte.toString())
+            elif selection == 'M' or selection == 'm':
+                print(userConnecte.toString())
+                userConnecte = menuModifUser(userConnecte)
+            elif selection == "E" or selection == "e":
+                print("Ajout de nouvelle entreprise :")
+                addNewEntreprise(listeDEntreprises)
+            elif selection == "S" or selection == "s":
+                print("Ajout d'un nouvel utilisateur")
+                creationUser(listeDeSalaries)
+            elif selection == "F" or selection == "f":
+                for ligne in listeDeSalaries:
+                    print(ligne.toString())
+            elif selection == "D" or selection == "d":
+                userId = int(input("Veuillez entrer l'Id de l'utilisateur a supprimer :"))
+                deleteUser(userId, listeDeSalaries)
+                
+            elif selection == 'Q' or selection == 'q':
+                ok = True
+            else:
+                print("Choix inconnu, Veuillez réésayer.")
+    return
+
+def creationUser(listeDeSalaries):
+    idS = 0
+    for unElem in listeDeSalaries:
+        idS = unElem.getId()
+    idS = idS+1
+    name = input("Entrez nom:")
+    firstName = input("Entrez prénom:")
+    age = int(input("entrez age:"))
+    mail = input("entrez mail:")
+    fonction = input("entrez fonction:")
+    workgroup = input("entrez workgroup")
+    login = generateLogin(name,firstName)
+    mdp = input("entrez mot de passe")
+    mdp = hashMdp(mdp)
+    isAdmin = bool(input("Est ce que l'utilisateur est admin? (True ou False):"))
+    creationDate = date.today().strftime("%d/%m/%Y")
+    entreprise = int(input("Entrez l'Id de l'entreprise : "))
+
+    listeDeSalaries.append(Salarie(idS,name,firstName,age,mail,fonction,workgroup,login,mdp,isAdmin,creationDate,entreprise))
+    print("l'utilisateur a été ajouté.")
+
+def deleteUser(userId,listeDeSalaries):
+    good = False
+    for i in range(len(listeDeSalaries)):
+        if listeDeSalaries[i].getId()==userId:
+            del listeDeSalaries[i]
+            good = True
+    if good == True:
+        print("l'utilisateur a été supprimé.")
     else:
-        if selection == 'A' or selection == 'a':
-            print(userConnecte.toString())
-        elif selection == 'M' or selection == 'm':
-            print(userConnecte.toString())
-            userConnecte = menuModifUser(userConnecte)
-        elif selection == 'Q' or selection == 'q':
+        print("Utilisateur inconnu")
+    return good
+
+def menuModifUser(user):
+    ok = False
+    while ok == False:
+        print("Modification de l'utilisateur :\n")
+        print(user.toString())
+        print("\nN pour le nom")
+        print("P pour le prénom")
+        print("A pour l'age")
+        print("M pour le mail")
+        print("F pour la fonction")
+        print("W pour le groupe de travail")
+        print("L pour le login")
+        print("P pour le mot de passe")
+        print("D pour modifier son paramètre Admin")
+        print("E pour modifier son entreprise")
+        print("B pour annuler")
+        choice = input("Entrez votre choix :")
+        if choice == "N" or choice =="n":
+            new = input("Entrez le nouveau nom")
+        elif choice == "P" or choice =="p":
+            new = input("Entrez le nouveau prénom")
+        elif choice == "A" or choice =="A":
+            new = input("modifier Age")
+        elif choice == "M" or choice =="m":
+            new = input("Modifier mail")
+        elif choice == "F" or choice =="f":
+            new = input("Modifier fonction")
+        elif choice == "W" or choice =="w":
+            new = input("modifier groupe de travail")
+        elif choice == "L" or choice =="l":
+            new = input("modifier login")
+        elif choice == "P" or choice =="p":
+            new = input("modifier mot de passe")
+        elif choice == "D" or choice == "d":
+            new = input("modifier parametre admin")
+        elif choice == "E" or choice =="e":
+            new = input("modifier Entreprise")
+        elif choice == "B" or choice =="b":
+            ok = True
+            print("Fin de modification.")
+        else:
+            print("Choix inconnu, veuillez réésayer.")
+    return
+        
+def menuEntreprise(entreprise, listeDEntreprises):
+    choice = ""
+    while choice != "B" or choice != "b":
+        print(entreprise.toString())
+        print("M pour modifier")
+        print("S pour supprimer")
+        print("B pour revenir en arrière")
+        choice = input("Veuillez choisir une action pour l'entreprise choisie: ")
+        if choice == "M" or choice == "m":
+            modifierEntreprise(entreprise)
+        elif choice == "S" or choice == "s":
+            deleteEntreprise(entreprise, listeDEntreprises)
+            print("l'entreprise " + entreprise.getName() + " a été supprimé.")
             return
+    return
  
-def menuEntreprise(entreprise):
-    
+
+def modifierEntreprise(entreprise):
+    ok = False
+    entreprise
+    print("Voici l'entreprise que vous voulez modifier: ")
+    print("-"*10)
+    print(entreprise.toString())
+    while ok == False:
+        print("1 pour modifier le nom")
+        print("2 pour modifier le logo")
+        print("3 pour modifier le directeur de l'entreprise")
+        print("0 pour annuler la modification")
+        choice = input("Veuillez choisir: ")
+        choice = int(choice)
+        if choice == 1:
+            newName = input("Veuillez chosisir le nouveau nom:")
+            entreprise.setCompanyName(newName)
+        elif choice == 2:
+            newLogo = input("Veuillez choisir un nouveau logo:")
+            entreprise.setCompanyLogo(newLogo)
+        elif choice == 3:
+            newCEOID = input("Veuillez choisir l'identifiant du nouveau directeur:")
+            entreprise.setCompanyDirector(newCEOID)
+        elif choice == 0:
+            ok = True
+        else:
+            print("Choix inconnu")
+    return
+
+def generateLogin(name,firstName):
+    login = firstName.lower()[0] + name.lower()
+    return login
+
+def deleteEntreprise(entreprise, listeDEntreprises):
+    for i in range(len(listeDEntreprises)):
+        if entreprise.getCompanyID() == listeDEntreprises[i].getCompanyID():
+            del listeDEntreprises[i]
+            return
 
 def trouverEntreprise(entrepriseSelec, listeDEntreprises):
     found = False   
@@ -126,28 +283,22 @@ def trouverEntreprise(entrepriseSelec, listeDEntreprises):
             return ligne
     return found
 
-                    
 
-#    for ligne3 in f2:
-#        splittedLigne3 = ligne3.split(",")
-#        if splittedLigne3[0] == entrepriseSelec:
-#            os.system("cls")
-#            result="\nBienvenue sur le menu de "+splittedLigne3[1]+"\n1 - Liste des salariés\n2 - Modifier les informations de l'entreprise\n3 - Supprimer l'entreprise (attention hein :))"
-#            print(listeDeSalaries)
-#    print(result)
 
 if __name__ == "__main__":
     listeDeSalaries = getSalarieList()
     listeDEntreprises = getEntrepriseList()
     
     
-#    print("Bienvenue dans l'Active Directory du groupe 12 !")
     
     userConnecte = connexion(listeDeSalaries)
-
-#    print("Vous vous etes Connectés! GG")
-#    print("Bonjour, " + userConnecte.getFirstName() + " " + userConnecte.getName())
     
-    menuAdmin(listeDeSalaries, listeDEntreprises, userConnecte)    
+    print("Bienvenue dans l'Active Directory du groupe 12 !")
+    print("Bonjour, " + userConnecte.getFirstName() + " " + userConnecte.getName())
+    if userConnecte.isAppAdmin() == True:
+        menuAdmin(listeDeSalaries, listeDEntreprises, userConnecte)
     
+    print("Au revoir")
     sauvegardeDonnéesFinDExecution(listeDeSalaries, listeDEntreprises)
+
+
